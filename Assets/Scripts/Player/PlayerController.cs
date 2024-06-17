@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationSpeed = 500f;
     [SerializeField] private CameraController cameraController;
 
+    [Header("Player Animator")]
+    public Animator animator;
+
     Quaternion requiredRotation;
 
     private void Update()
@@ -23,7 +26,7 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         //Checking if the player has any movement input
-        float movementAmount = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
+        float movementAmount = Mathf.Clamp01(horizontal) + Mathf.Clamp01(vertical);
 
         var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
         var movementDirection = cameraController.flatRotation * movementInput;
@@ -35,5 +38,8 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requiredRotation, rotationSpeed * Time.deltaTime);
+
+        //Animation
+        animator.SetFloat("movementValue", movementAmount, 0.2f, Time.deltaTime);
     }
 }
