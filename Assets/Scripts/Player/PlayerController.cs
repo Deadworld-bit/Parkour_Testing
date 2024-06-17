@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Player Movement")]
+    [SerializeField] private float movementSpeed = 4f;
+    [SerializeField] private float rotationSpeed = 500f;
+    [SerializeField] private CameraController cameraController;
+
+    Quaternion requiredRotation;
+
+    private void Update()
     {
-        
+        PlayerMovement();
     }
 
-    // Update is called once per frame
-    void Update()
+    void PlayerMovement()
     {
-        
+        //Access pre setup input manager in unity
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        //Checking if the player has any movement input
+        float movementAmount = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
+
+        var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
+        var movementDirection = cameraController.flatRotation * movementInput;
+
+        if (movementAmount > 0)
+        {
+            transform.position += movementDirection * movementSpeed * Time.deltaTime;
+            requiredRotation = Quaternion.LookRotation(movementDirection);
+        }
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, requiredRotation, rotationSpeed * Time.deltaTime);
     }
 }
