@@ -9,15 +9,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 4f;
     [SerializeField] private float rotationSpeed = 500f;
     [SerializeField] private CameraController cameraController;
+    Quaternion requiredRotation;
 
     [Header("Player Animator")]
     public Animator animator;
 
-    Quaternion requiredRotation;
+    [Header("Player Collision & Gravity")]
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] Vector3 groundCheckOffset;
+    [SerializeField] LayerMask groundLayer;
+    private bool onGround;
+    [SerializeField] private float gravity;
+
+    private Vector3 movementDirection;
 
     private void Update()
     {
+        if (onGround)
+        {
+            gravity = 0f;
+        }
+        else
+        {
+            //Gravity method 
+            gravity += Physics.gravity.y *Time.deltaTime;
+        }
+
+        // var velocity = movementDirection * movementSpeed;
+        // velocity.y =gravity;
+
         PlayerMovement();
+        GroundCheck();
+        Debug.Log("OnGround: " + onGround);
     }
 
     void PlayerMovement()
@@ -26,14 +50,14 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         //Checking if the player has any movement input
-        float movementAmount = Mathf.Clamp01(horizontal) + Mathf.Clamp01(vertical);
+        float movementAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
 
         var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
-        var movementDirection = cameraController.flatRotation * movementInput;
+        movementDirection = cameraController.flatRotation * movementInput;
 
+        characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
         if (movementAmount > 0)
         {
-            transform.position += movementDirection * movementSpeed * Time.deltaTime;
             requiredRotation = Quaternion.LookRotation(movementDirection);
         }
 
@@ -41,5 +65,18 @@ public class PlayerController : MonoBehaviour
 
         //Animation
         animator.SetFloat("movementValue", movementAmount, 0.2f, Time.deltaTime);
+    }
+
+    void GroundCheck()
+    {
+        //create a sphere to check if the character is on the ground
+        onGround = Physics.CheckSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius, groundLayer);
+    }
+
+    //Visualize the sphere
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius);
     }
 }
