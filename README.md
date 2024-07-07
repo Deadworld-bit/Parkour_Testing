@@ -1,4 +1,4 @@
-[![Create a Parkour Game with Unity | © 2024 by Deadworld ]](https://github.com/Deadworld-bit/TurnBasedStrategy_Testing.git)
+[![Create a Parkour Game with Unity | © 2024 by Deadworld ]](https://github.com/Deadworld-bit/Parkour_Testing.git)
 # Welcome to Parkour_Testing repository
 ## This repo stores unity projects. You will find in this repo the following stuff
 * Parkour_Testing is a dynamic parkour game developed using the Unity game engine.
