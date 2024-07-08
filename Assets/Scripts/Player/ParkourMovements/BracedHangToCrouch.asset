@@ -10,8 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee5df0e7d10ad2d43bc5bcb95cfb9cc4, type: 3}
-  m_Name: RunningJump
+  m_Name: BracedHangToCrouch
   m_EditorClassIdentifier: 
-  animationName: Running Jump
-  minimumHeight: 0
-  maximumHeight: 0
+  animationName: BracedHangToCrouch
+  minimumHeight: 1
+  maximumHeight: 1.5
+  lookAtObstacle: 1
+  allowTargetMatching: 1
+  compareBodyPart: 2
+  compareStartTime: 0
+  compareEndTime: 0.59

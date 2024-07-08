@@ -48,9 +48,33 @@ public class CharacterParkourController : MonoBehaviour
         {
             Debug.Log("Animation's name is not match");
         }
-        yield return new WaitForSeconds(animationState.length);
+
+        float timeCounter = 0f;
+        while (timeCounter <= animationState.length)
+        {
+            timeCounter += Time.deltaTime;
+
+            //Make the player to look at the obstacle
+            if (movement.LookAtObstacle)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, movement.RequiredRotation, playerController.rotationSpeed * Time.deltaTime);
+            }
+
+            if (movement.AllowTargetMatching)
+            {
+                CompareTarget(movement);
+            }
+
+            yield return null;
+        }
 
         playerController.SetControl(true);
         playerInAction = false;
+    }
+
+    void CompareTarget(ParkourMovement movement)
+    {
+        animator.MatchTarget(movement.ComparePosition, transform.rotation, movement.CompareBodyPart,
+        new MatchTargetWeightMask(new Vector3(0, 1, 0), 0), movement.CompareStartTime, movement.CompareEndTime);
     }
 }

@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: Jumping on stuff
   m_EditorClassIdentifier: 
   animationName: Jumping on stuff
-  minimumHeight: 0.5
-  maximumHeight: 0.9
+  minimumHeight: 0.1
+  maximumHeight: 0.5
+  lookAtObstacle: 1
+  allowTargetMatching: 1
+  compareBodyPart: 3
+  compareStartTime: 0.55
+  compareEndTime: 1.04

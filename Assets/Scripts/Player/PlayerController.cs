@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
     [SerializeField] private float movementSpeed = 4f;
-    [SerializeField] private float rotationSpeed = 500f;
+    public float rotationSpeed = 500f;
     [SerializeField] private CameraController cameraController;
     Quaternion requiredRotation;
     private bool playerControl = true;
