@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationSpeed = 500f;
     [SerializeField] private CameraController cameraController;
     Quaternion requiredRotation;
+    private bool playerControl = true;
 
     [Header("Player Animator")]
     public Animator animator;
@@ -26,6 +27,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        PlayerMovement();
+        if(!playerControl){
+            return;
+        }
+
         if (onGround)
         {
             gravity = 0f;
@@ -33,13 +39,12 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Gravity method 
-            gravity += Physics.gravity.y *Time.deltaTime;
+            gravity += Physics.gravity.y * Time.deltaTime;
         }
 
         // var velocity = movementDirection * movementSpeed;
         // velocity.y =gravity;
 
-        PlayerMovement();
         GroundCheck();
         Debug.Log("OnGround: " + onGround);
     }
@@ -78,5 +83,17 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius);
+    }
+
+    public void SetControl(bool hasControl)
+    {
+        this.playerControl = hasControl;
+        characterController.enabled = hasControl;
+
+        if (!hasControl)
+        {
+            animator.SetFloat("movementValue", 0f);
+            requiredRotation = transform.rotation;
+        }
     }
 }

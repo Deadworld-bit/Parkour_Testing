@@ -4936,6 +4936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   environmentChecker: {fileID: 5258056997398589193}
   animator: {fileID: 5258056997398589189}
+  playerController: {fileID: 5258056997398589190}
   newParkourMovement:
   - {fileID: 11400000, guid: a98a9160e00d3794fa9241997c00bb7c, type: 2}
   - {fileID: 11400000, guid: 94ea7d19c5a4ade46a42e2d2da817e93, type: 2}

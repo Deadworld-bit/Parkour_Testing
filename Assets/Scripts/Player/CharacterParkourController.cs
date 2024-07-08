@@ -8,6 +8,7 @@ public class CharacterParkourController : MonoBehaviour
     [SerializeField] private EnvironmentChecker environmentChecker;
     [SerializeField] private Animator animator;
     private bool playerInAction;
+    [SerializeField] private PlayerController playerController;
 
     [Header("Parkour Movements")]
     public List<ParkourMovement> newParkourMovement;
@@ -20,7 +21,7 @@ public class CharacterParkourController : MonoBehaviour
 
             if (hitData.obstacleFound)
             {
-                // Debug.Log("Obejct Founded" + hitData.obstacleInfo.transform.name);
+                Debug.Log("Obejct Founded" + hitData.obstacleInfo.transform.name);
                 foreach (var movement in newParkourMovement)
                 {
                     if (movement.CheckAvailable(hitData, transform))
@@ -37,6 +38,7 @@ public class CharacterParkourController : MonoBehaviour
     IEnumerator PerformParkourMovemement(ParkourMovement movement)
     {
         playerInAction = true;
+        playerController.SetControl(false);
 
         animator.CrossFade(movement.AnimationName, 0.2f);
         yield return null;
@@ -46,8 +48,9 @@ public class CharacterParkourController : MonoBehaviour
         {
             Debug.Log("Animation's name is not match");
         }
-
         yield return new WaitForSeconds(animationState.length);
+
+        playerController.SetControl(true);
         playerInAction = false;
     }
 }
