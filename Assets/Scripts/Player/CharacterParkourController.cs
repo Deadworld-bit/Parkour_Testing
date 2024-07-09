@@ -75,6 +75,6 @@ public class CharacterParkourController : MonoBehaviour
     void CompareTarget(ParkourMovement movement)
     {
         animator.MatchTarget(movement.ComparePosition, transform.rotation, movement.CompareBodyPart,
-        new MatchTargetWeightMask(new Vector3(0, 1, 0), 0), movement.CompareStartTime, movement.CompareEndTime);
+        new MatchTargetWeightMask(movement.ComparePositionWeight, 0), movement.CompareStartTime, movement.CompareEndTime);
     }
 }

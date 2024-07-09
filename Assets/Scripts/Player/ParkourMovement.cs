@@ -23,6 +23,7 @@ public class ParkourMovement : ScriptableObject
     [SerializeField] private AvatarTarget compareBodyPart;
     [SerializeField] private float compareStartTime;
     [SerializeField] private float compareEndTime;
+    [SerializeField] private Vector3 comparePositionWeight = new Vector3(0, 1, 0);
 
     //Variables
     public string AnimationName => animationName;
@@ -31,6 +32,7 @@ public class ParkourMovement : ScriptableObject
     public AvatarTarget CompareBodyPart => compareBodyPart;
     public float CompareStartTime => compareStartTime;
     public float CompareEndTime => compareEndTime;
+    public Vector3 ComparePositionWeight => comparePositionWeight;
 
     public Vector3 ComparePosition { get; set; }
 
