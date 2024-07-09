@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5df0e7d10ad2d43bc5bcb95cfb9cc4, type: 3}
   m_Name: JumpingOver2
   m_EditorClassIdentifier: 
-  animationName: 
-  minimumHeight: 0
-  maximumHeight: 0
-  lookAtObstacle: 0
+  animationName: JumpingOver2
+  minimumHeight: 0.7
+  maximumHeight: 1
+  vaultObstacleTag: VaultObstacle2
+  lookAtObstacle: 1
+  parkourMovementDelay: 0
   allowTargetMatching: 1
-  compareBodyPart: 0
-  compareStartTime: 0
-  compareEndTime: 0
+  compareBodyPart: 4
+  compareStartTime: 0.01
+  compareEndTime: 0.2
   comparePositionWeight: {x: 0, y: 1, z: 0}

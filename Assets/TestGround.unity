@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 52819683}
   m_Layer: 8
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: VaultObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 896098924}
   m_Layer: 8
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: VaultObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -974,7 +974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896098922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.72316, y: -1.9457226, z: -0.14281334}
+  m_LocalPosition: {x: -9.72316, y: -1.9457226, z: -1.23}
   m_LocalScale: {x: 2, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1217,7 +1217,7 @@ GameObject:
   - component: {fileID: 1186415153}
   m_Layer: 8
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: VaultObstacle2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1230,7 +1230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186415151}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.72316, y: -1.9457226, z: 3.7401865}
+  m_LocalPosition: {x: -9.72316, y: -1.9457226, z: 4.97}
   m_LocalScale: {x: 2, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5116,6 +5116,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94ea7d19c5a4ade46a42e2d2da817e93, type: 2}
   - {fileID: 11400000, guid: ae6a1ae2ce2e73f43938a5c1fb839ee2, type: 2}
   - {fileID: 11400000, guid: 238f9c169ab28eb4e818b41c0b2154ab, type: 2}
+  - {fileID: 11400000, guid: ee5f5a3f6abe9e74282ff24aa9d9321e, type: 2}
+  - {fileID: 11400000, guid: 8344385eb81bf8f46917f85b6d012017, type: 2}
 --- !u!114 &5258056997398589193
 MonoBehaviour:
   m_ObjectHideFlags: 0

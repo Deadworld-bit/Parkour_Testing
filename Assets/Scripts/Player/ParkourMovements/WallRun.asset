@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5df0e7d10ad2d43bc5bcb95cfb9cc4, type: 3}
   m_Name: WallRun
   m_EditorClassIdentifier: 
-  animationName: Wall Run
+  animationName: Wall Run 2
   minimumHeight: 2
   maximumHeight: 2.7
+  vaultObstacleTag: 
   lookAtObstacle: 1
+  parkourMovementDelay: 0.9
   allowTargetMatching: 1
-  compareBodyPart: 5
-  compareStartTime: 0.23
-  compareEndTime: 1.01
+  compareBodyPart: 2
+  compareStartTime: 0
+  compareEndTime: 0.32
   comparePositionWeight: {x: 0, y: 1, z: 1.5}

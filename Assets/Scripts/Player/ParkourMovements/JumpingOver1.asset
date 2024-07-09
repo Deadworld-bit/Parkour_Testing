@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee5df0e7d10ad2d43bc5bcb95cfb9cc4, type: 3}
-  m_Name: Jumping on stuff
+  m_Name: JumpingOver1
   m_EditorClassIdentifier: 
-  animationName: Jumping on stuff
-  minimumHeight: 0.1
-  maximumHeight: 0.5
-  vaultObstacleTag: 
+  animationName: JumpingOver1
+  minimumHeight: 0.7
+  maximumHeight: 1
+  vaultObstacleTag: VaultObstacle
   lookAtObstacle: 1
   parkourMovementDelay: 0
   allowTargetMatching: 1
-  compareBodyPart: 3
-  compareStartTime: 0.55
-  compareEndTime: 1.04
+  compareBodyPart: 4
+  compareStartTime: 0.02
+  compareEndTime: 0.5
   comparePositionWeight: {x: 0, y: 1, z: 0}
