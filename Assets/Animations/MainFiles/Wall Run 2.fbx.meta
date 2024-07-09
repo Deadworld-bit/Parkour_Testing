@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 821a05be168308848bc7967e87533cfd
+guid: 9b728fe7b78acca4cbd3269a09a643c4
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -19,7 +19,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
       rotation in copied configuration does not match rotation in animation file:\n\t'Ball_L'
-      : rotation error = 6.879246 deg\n"
+      : rotation error = 33.871223 deg\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'mixamo.com' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -40,11 +40,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpingOver2
+      name: Wall Run 2
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 20
-      lastFrame: 117
+      firstFrame: 0
+      lastFrame: 102
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

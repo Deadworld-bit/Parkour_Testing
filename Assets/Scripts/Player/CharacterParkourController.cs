@@ -65,8 +65,15 @@ public class CharacterParkourController : MonoBehaviour
                 CompareTarget(movement);
             }
 
+            if (animator.IsInTransition(0) && timeCounter > 0.5)
+            {
+                break;
+            }
+
             yield return null;
         }
+
+        yield return new WaitForSeconds(movement.ParkourMovementDelay);
 
         playerController.SetControl(true);
         playerInAction = false;
