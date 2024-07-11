@@ -64,7 +64,7 @@ public class EnvironmentChecker : MonoBehaviour
         }
 
         float ledgeOriginalOffset = 0.5f;
-        var ledgeOrigin = transform.position - movementDirection * ledgeOriginalOffset;
+        var ledgeOrigin = transform.position + movementDirection * ledgeOriginalOffset;
 
         if (Physics.Raycast(ledgeOrigin, Vector3.down, out RaycastHit hit, ledgeRayLength, obstacleLayer))
         {

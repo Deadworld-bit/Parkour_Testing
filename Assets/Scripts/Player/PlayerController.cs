@@ -24,10 +24,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 groundCheckOffset;
     [SerializeField] LayerMask groundLayer;
     private bool onGround;
+
     public bool playerOnLedge { get; set; }
     public LedgeInfo LedgeInfo { get; set; }
     [SerializeField] private float gravity;
     [SerializeField] private Vector3 moveDir;
+    [SerializeField] private Vector3 requiredMoveDir;
+    private Vector3 velocity;
 
     private void Update()
     {
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
             if (playerOnLedge)
             {
                 LedgeInfo = ledgeInfo;
+                playerLedgeMovement();
                 Debug.Log("Player is on ledge");
             }
         }
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
             gravity += Physics.gravity.y * Time.deltaTime;
         }
 
-        var velocity = moveDir * movementSpeed;
+        velocity = moveDir * movementSpeed;
         velocity.y = gravity;
 
         GroundCheck();
@@ -71,15 +75,15 @@ public class PlayerController : MonoBehaviour
         float movementAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
 
         var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
-        var movementDirection = cameraController.flatRotation * movementInput;
+        requiredMoveDir = cameraController.flatRotation * movementInput;
 
-        characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
+        characterController.Move(velocity * Time.deltaTime);
         if (movementAmount > 0)
         {
-            requiredRotation = Quaternion.LookRotation(movementDirection);
+            requiredRotation = Quaternion.LookRotation(moveDir);
         }
 
-        moveDir = movementDirection;
+        moveDir = requiredMoveDir;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requiredRotation, rotationSpeed * Time.deltaTime);
 
@@ -91,6 +95,16 @@ public class PlayerController : MonoBehaviour
     {
         //create a sphere to check if the character is on the ground
         onGround = Physics.CheckSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius, groundLayer);
+    }
+
+    void playerLedgeMovement()
+    {
+        float angle = Vector3.Angle(LedgeInfo.groundHit.normal, requiredMoveDir);
+        if (angle < 90)
+        {
+            velocity = Vector3.zero;
+            moveDir = Vector3.zero;
+        }
     }
 
     //Visualize the sphere
