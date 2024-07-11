@@ -9,6 +9,7 @@ public class CharacterParkourController : MonoBehaviour
     [SerializeField] private Animator animator;
     private bool playerInAction;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private ParkourMovement jumpDown1;
 
     [Header("Parkour Movements")]
     public List<ParkourMovement> newParkourMovement;
@@ -27,15 +28,24 @@ public class CharacterParkourController : MonoBehaviour
                     if (movement.CheckAvailable(hitData, transform))
                     {
                         //perform parkour action
-                        StartCoroutine(PerformParkourMovemement(movement));
+                        StartCoroutine(PerformParkourMovement(movement));
                         break;
                     }
                 }
             }
         }
+
+        if (playerController.playerOnLedge && !playerInAction && Input.GetButtonDown("Jump"))
+        {
+            if (playerController.LedgeInfo.angle <= 50)
+            {
+                playerController.playerOnLedge = false;
+                StartCoroutine(PerformParkourMovement(jumpDown1));
+            }
+        }
     }
 
-    IEnumerator PerformParkourMovemement(ParkourMovement movement)
+    IEnumerator PerformParkourMovement(ParkourMovement movement)
     {
         playerInAction = true;
         playerController.SetControl(false);

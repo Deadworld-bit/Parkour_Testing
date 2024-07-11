@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using static EnvironmentChecker;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
     [SerializeField] private float movementSpeed = 4f;
     public float rotationSpeed = 500f;
+    [SerializeField] private EnvironmentChecker environmentChecker;
     [SerializeField] private CameraController cameraController;
     Quaternion requiredRotation;
     private bool playerControl = true;
@@ -21,20 +24,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 groundCheckOffset;
     [SerializeField] LayerMask groundLayer;
     private bool onGround;
+    public bool playerOnLedge { get; set; }
+    public LedgeInfo LedgeInfo { get; set; }
     [SerializeField] private float gravity;
-
-    private Vector3 movementDirection;
+    [SerializeField] private Vector3 moveDir;
 
     private void Update()
     {
         PlayerMovement();
-        if(!playerControl){
+        if (!playerControl)
+        {
             return;
         }
 
         if (onGround)
         {
             gravity = 0f;
+            playerOnLedge = environmentChecker.CheckLedge(moveDir, out LedgeInfo ledgeInfo);
+
+            if (playerOnLedge)
+            {
+                LedgeInfo = ledgeInfo;
+                Debug.Log("Player is on ledge");
+            }
         }
         else
         {
@@ -42,10 +54,11 @@ public class PlayerController : MonoBehaviour
             gravity += Physics.gravity.y * Time.deltaTime;
         }
 
-        // var velocity = movementDirection * movementSpeed;
-        // velocity.y =gravity;
+        var velocity = moveDir * movementSpeed;
+        velocity.y = gravity;
 
         GroundCheck();
+        animator.SetBool("onGround", onGround);
         Debug.Log("OnGround: " + onGround);
     }
 
@@ -58,13 +71,15 @@ public class PlayerController : MonoBehaviour
         float movementAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
 
         var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
-        movementDirection = cameraController.flatRotation * movementInput;
+        var movementDirection = cameraController.flatRotation * movementInput;
 
         characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
         if (movementAmount > 0)
         {
             requiredRotation = Quaternion.LookRotation(movementDirection);
         }
+
+        moveDir = movementDirection;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requiredRotation, rotationSpeed * Time.deltaTime);
 

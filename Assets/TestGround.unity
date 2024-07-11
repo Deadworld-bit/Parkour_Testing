@@ -5069,6 +5069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 6
   rotationSpeed: 500
+  environmentChecker: {fileID: 5258056997398589193}
   cameraController: {fileID: 1823688470}
   animator: {fileID: 5258056997398589189}
   characterController: {fileID: 5258056997398589191}
@@ -5076,8 +5077,9 @@ MonoBehaviour:
   groundCheckOffset: {x: 0, y: 0, z: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   gravity: 0
+  moveDir: {x: 0, y: 0, z: 0}
 --- !u!143 &5258056997398589191
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5111,9 +5113,9 @@ MonoBehaviour:
   environmentChecker: {fileID: 5258056997398589193}
   animator: {fileID: 5258056997398589189}
   playerController: {fileID: 5258056997398589190}
+  jumpDown1: {fileID: 11400000, guid: 257218de95465a148828b4005499dc2a, type: 2}
   newParkourMovement:
   - {fileID: 11400000, guid: a98a9160e00d3794fa9241997c00bb7c, type: 2}
-  - {fileID: 11400000, guid: 94ea7d19c5a4ade46a42e2d2da817e93, type: 2}
   - {fileID: 11400000, guid: ae6a1ae2ce2e73f43938a5c1fb839ee2, type: 2}
   - {fileID: 11400000, guid: 238f9c169ab28eb4e818b41c0b2154ab, type: 2}
   - {fileID: 11400000, guid: ee5f5a3f6abe9e74282ff24aa9d9321e, type: 2}
@@ -5135,7 +5137,9 @@ MonoBehaviour:
   heightRayLength: 7
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
+  ledgeRayLength: 10
+  ledgeRayHeightThreshold: 0.75
 --- !u!137 &5258056997402586179
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
