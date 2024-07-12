@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private EnvironmentChecker environmentChecker;
     [SerializeField] private CameraController cameraController;
     Quaternion requiredRotation;
-    private bool playerControl = true;
+    public bool playerControl = true;
 
     [Header("Player Animator")]
     public Animator animator;
@@ -39,10 +39,12 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        velocity = Vector3.zero;
 
         if (onGround)
         {
             gravity = 0f;
+            velocity = moveDir * movementSpeed;
             playerOnLedge = environmentChecker.CheckLedge(moveDir, out LedgeInfo ledgeInfo);
 
             if (playerOnLedge)
@@ -51,14 +53,17 @@ public class PlayerController : MonoBehaviour
                 playerLedgeMovement();
                 Debug.Log("Player is on ledge");
             }
+
+            // //Animation
+            // animator.SetFloat("movementValue", velocity.magnitude / movementSpeed, 0.2f, Time.deltaTime);
         }
         else
         {
             //Gravity method 
             gravity += Physics.gravity.y * Time.deltaTime;
+            velocity = transform.forward * movementSpeed / 2;
         }
 
-        velocity = moveDir * movementSpeed;
         velocity.y = gravity;
 
         GroundCheck();
@@ -78,7 +83,7 @@ public class PlayerController : MonoBehaviour
         requiredMoveDir = cameraController.flatRotation * movementInput;
 
         characterController.Move(velocity * Time.deltaTime);
-        if (movementAmount > 0)
+        if (movementAmount > 0 && moveDir.magnitude > 0.2f)
         {
             requiredRotation = Quaternion.LookRotation(moveDir);
         }
@@ -124,5 +129,11 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("movementValue", 0f);
             requiredRotation = transform.rotation;
         }
+    }
+
+    public bool HasPlayerControl
+    {
+        get => playerControl;
+        set => playerControl = value;
     }
 }

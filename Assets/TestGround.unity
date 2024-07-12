@@ -1449,6 +1449,11 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 1707767314}
+    - target: {fileID: 8276030855967411709, guid: 50218a68f2c7c3c4e89b0053974fd59a,
+        type: 3}
+      propertyPath: m_CollideAgainst.m_Bits
+      value: 439
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50218a68f2c7c3c4e89b0053974fd59a, type: 3}
 --- !u!1001 &1367419216
@@ -5067,7 +5072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87abd890f5aad6e49b879f5bbfe08b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 6
+  movementSpeed: 5
   rotationSpeed: 500
   environmentChecker: {fileID: 5258056997398589193}
   cameraController: {fileID: 1823688470}
@@ -5080,6 +5085,7 @@ MonoBehaviour:
     m_Bits: 384
   gravity: 0
   moveDir: {x: 0, y: 0, z: 0}
+  requiredMoveDir: {x: 0, y: 0, z: 0}
 --- !u!143 &5258056997398589191
 CharacterController:
   m_ObjectHideFlags: 0
