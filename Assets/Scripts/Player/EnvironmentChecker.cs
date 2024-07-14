@@ -16,6 +16,11 @@ public class EnvironmentChecker : MonoBehaviour
     [SerializeField] private float ledgeRayLength = 10f;
     [SerializeField] private float ledgeRayHeightThreshold = 0.75f;
 
+    [Header("Check Climbable Edge")]
+    [SerializeField] private float climbableRayLength = 1.5f;
+    [SerializeField] private LayerMask climbableLayer;
+    [SerializeField] private int numberOfRays = 12;
+
     public struct ObstacleInfo
     {
         public bool obstacleFound;
@@ -86,4 +91,26 @@ public class EnvironmentChecker : MonoBehaviour
         return false;
     }
 
+    public bool CheckClimbableEdge(Vector3 climbDirection, out RaycastHit climbableInfo)
+    {
+        climbableInfo = new RaycastHit();
+        if (climbDirection == Vector3.zero)
+        {
+            return false;
+        }
+
+        var climbOrigin = transform.position + Vector3.up * 1.5f;
+        var climbOffset = new Vector3(0, 0.19f, 0);
+
+        for (int i = 0; i < numberOfRays; i++)
+        {
+            Debug.DrawRay(climbOrigin + climbOffset * i, climbDirection, Color.blue);
+            if (Physics.Raycast(climbOrigin + climbOffset * i, climbDirection, out RaycastHit climbHit, climbableRayLength, climbableLayer))
+            {
+                climbableInfo = climbHit;
+                return true;
+            }
+        }
+        return false;
+    }
 }
