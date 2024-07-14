@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     Quaternion requiredRotation;
     public bool playerControl = true;
+    public bool playerInAction { get; private set; }
 
     [Header("Player Animator")]
     public Animator animator;
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("OnGround: " + onGround);
     }
 
-    void PlayerMovement()
+    private void PlayerMovement()
     {
         //Access pre setup input manager in unity
         float horizontal = Input.GetAxis("Horizontal");
@@ -94,6 +95,48 @@ public class PlayerController : MonoBehaviour
 
         //Animation
         animator.SetFloat("movementValue", movementAmount, 0.2f, Time.deltaTime);
+    }
+
+    public IEnumerator PerformMovement(string AnimationName, CompareTargetParameter targetParameter, Quaternion RequiredRotation,
+     bool LookAtObstacle = false, float parkourMovementDelay = 0f)
+    {
+        playerInAction = true;
+
+        animator.CrossFade(AnimationName, 0.2f);
+        yield return null;
+
+        var animationState = animator.GetNextAnimatorStateInfo(0);
+        if (!animationState.IsName(AnimationName))
+        {
+            Debug.Log("Animation's name is not match");
+        }
+
+        float timeCounter = 0f;
+        while (timeCounter <= animationState.length)
+        {
+            timeCounter += Time.deltaTime;
+
+            //Make the player to look at the obstacle
+            if (LookAtObstacle)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, RequiredRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            if (targetParameter != null)
+            {
+                CompareTarget(targetParameter);
+            }
+
+            if (animator.IsInTransition(0) && timeCounter > 0.5)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(parkourMovementDelay);
+        playerInAction = false;
     }
 
     void GroundCheck()
@@ -119,6 +162,12 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius);
     }
 
+    void CompareTarget(CompareTargetParameter compareTargetParameter)
+    {
+        animator.MatchTarget(compareTargetParameter.position, transform.rotation, compareTargetParameter.bodyPart,
+        new MatchTargetWeightMask(compareTargetParameter.positionWeight, 0), compareTargetParameter.startTime, compareTargetParameter.endTime);
+    }
+
     public void SetControl(bool hasControl)
     {
         this.playerControl = hasControl;
@@ -136,4 +185,13 @@ public class PlayerController : MonoBehaviour
         get => playerControl;
         set => playerControl = value;
     }
+}
+
+public class CompareTargetParameter
+{
+    public Vector3 position;
+    public AvatarTarget bodyPart;
+    public Vector3 positionWeight;
+    public float startTime;
+    public float endTime;
 }

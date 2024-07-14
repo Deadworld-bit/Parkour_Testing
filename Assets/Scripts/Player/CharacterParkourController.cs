@@ -7,7 +7,6 @@ public class CharacterParkourController : MonoBehaviour
 {
     [SerializeField] private EnvironmentChecker environmentChecker;
     [SerializeField] private Animator animator;
-    private bool playerInAction;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private ParkourMovement jumpDown1;
 
@@ -16,7 +15,7 @@ public class CharacterParkourController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Jump") && !playerInAction)
+        if (Input.GetButton("Jump") && !playerController.playerInAction)
         {
             var hitData = environmentChecker.CheckObstacle();
 
@@ -35,7 +34,7 @@ public class CharacterParkourController : MonoBehaviour
             }
         }
 
-        if (playerController.playerOnLedge && !playerInAction && Input.GetButtonDown("Jump"))
+        if (playerController.playerOnLedge && !playerController.playerInAction && Input.GetButtonDown("Jump"))
         {
             if (playerController.LedgeInfo.angle <= 50)
             {
@@ -47,46 +46,25 @@ public class CharacterParkourController : MonoBehaviour
 
     IEnumerator PerformParkourMovement(ParkourMovement movement)
     {
-        playerInAction = true;
         playerController.SetControl(false);
 
-        animator.CrossFade(movement.AnimationName, 0.2f);
-        yield return null;
-
-        var animationState = animator.GetNextAnimatorStateInfo(0);
-        if (!animationState.IsName(movement.AnimationName))
+        CompareTargetParameter compareTargetParameter = null;
+        if (movement.AllowTargetMatching)
         {
-            Debug.Log("Animation's name is not match");
+            compareTargetParameter = new CompareTargetParameter()
+            {
+                position = movement.ComparePosition,
+                bodyPart = movement.CompareBodyPart,
+                positionWeight = movement.ComparePositionWeight,
+                startTime = movement.CompareStartTime,
+                endTime = movement.CompareEndTime,
+            };
         }
 
-        float timeCounter = 0f;
-        while (timeCounter <= animationState.length)
-        {
-            timeCounter += Time.deltaTime;
-
-            //Make the player to look at the obstacle
-            if (movement.LookAtObstacle)
-            {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, movement.RequiredRotation, playerController.rotationSpeed * Time.deltaTime);
-            }
-
-            if (movement.AllowTargetMatching)
-            {
-                CompareTarget(movement);
-            }
-
-            if (animator.IsInTransition(0) && timeCounter > 0.5)
-            {
-                break;
-            }
-
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(movement.ParkourMovementDelay);
+        yield return playerController.PerformMovement(movement.AnimationName, compareTargetParameter, movement.RequiredRotation, movement.LookAtObstacle,
+        movement.ParkourMovementDelay);
 
         playerController.SetControl(true);
-        playerInAction = false;
     }
 
     void CompareTarget(ParkourMovement movement)
