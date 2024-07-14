@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private bool onGround;
 
     public bool playerOnLedge { get; set; }
+    public bool playerHanging { get; set; }
     public LedgeInfo LedgeInfo { get; set; }
     [SerializeField] private float gravity;
     [SerializeField] private Vector3 moveDir;
@@ -37,6 +38,10 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMovement();
         if (!playerControl)
+        {
+            return;
+        }
+        if (playerHanging)
         {
             return;
         }
@@ -104,6 +109,11 @@ public class PlayerController : MonoBehaviour
 
         animator.CrossFade(AnimationName, 0.2f);
         yield return null;
+
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationName) == false)
+        {
+            yield return null;
+        }
 
         var animationState = animator.GetNextAnimatorStateInfo(0);
         if (!animationState.IsName(AnimationName))
