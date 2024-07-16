@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ClimbEdge : MonoBehaviour
@@ -27,6 +28,23 @@ public class ClimbEdge : MonoBehaviour
         };
 
         closeEdges.Add(closeEdge);
+    }
+
+    public CloseEdge GetCloseEdge(Vector2 edgeDirection)
+    {
+        CloseEdge closeEdge = null;
+
+        if (edgeDirection.y != 0)
+        {
+            closeEdge = closeEdges.FirstOrDefault(n => n.edgeDirection.y == edgeDirection.y);
+        }
+
+        if (edgeDirection.x != 0)
+        {
+            closeEdge = closeEdges.FirstOrDefault(n => n.edgeDirection.x == edgeDirection.x);
+        }
+
+        return closeEdge;
     }
 
     private void OnDrawGizmos()

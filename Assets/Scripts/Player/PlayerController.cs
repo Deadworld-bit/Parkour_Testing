@@ -36,15 +36,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        PlayerMovement();
-        if (!playerControl)
-        {
-            return;
-        }
-        if (playerHanging)
-        {
-            return;
-        }
+        //PlayerMovement();
+        if (!playerControl) return;
+        if (playerHanging) return;
+
         velocity = Vector3.zero;
 
         if (onGround)
@@ -71,6 +66,7 @@ public class PlayerController : MonoBehaviour
         }
 
         velocity.y = gravity;
+        PlayerMovement();
 
         GroundCheck();
         animator.SetBool("onGround", onGround);
@@ -109,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         animator.CrossFade(AnimationName, 0.2f);
         yield return null;
-        
+
         //Fix  
         // while (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationName) == false)
         // {

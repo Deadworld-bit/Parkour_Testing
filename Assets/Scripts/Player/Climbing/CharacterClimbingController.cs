@@ -6,6 +6,7 @@ public class CharacterClimbingController : MonoBehaviour
 {
     [SerializeField] private EnvironmentChecker environmentChecker;
     [SerializeField] private PlayerController playerController;
+    ClimbEdge currentEdge;
 
     private float inOutValue;
     private float upDownValue;
@@ -24,6 +25,7 @@ public class CharacterClimbingController : MonoBehaviour
             {
                 if (environmentChecker.CheckClimbableEdge(transform.forward, out RaycastHit climbableInfo))
                 {
+                    currentEdge = climbableInfo.transform.GetComponent<ClimbEdge>();
                     Debug.Log("Climb Point Found");
                     playerController.SetControl(false);
                     StartCoroutine(ClimbToEdge("Idle To Braced Hang", climbableInfo.transform, 0.39f, 0.45f));
@@ -32,7 +34,37 @@ public class CharacterClimbingController : MonoBehaviour
         }
         else
         {
-            //Ledge to Ledge
+            //edge to edge
+            float horizontal = Mathf.Round(Input.GetAxis("Horizontal"));
+            float vertical = Mathf.Round(Input.GetAxis("Vertical"));
+
+            var inputDirection = new Vector2(horizontal, vertical);
+
+            if (playerController.playerInAction || inputDirection == Vector2.zero) return;
+
+            var closeEdge = currentEdge.GetCloseEdge(inputDirection);
+
+            if (closeEdge != null) return;
+            if (closeEdge.connectionType == ConnectionType.Jump && Input.GetButtonDown("Jump"))
+            {
+                currentEdge = closeEdge.climbEdge;
+                if (closeEdge.edgeDirection.y == 1)
+                {
+                    StartCoroutine(ClimbToEdge("Braced Hang Hop Up", currentEdge.transform, 0.35f, 0.70f));
+                }
+                if (closeEdge.edgeDirection.y == -1)
+                {
+                    StartCoroutine(ClimbToEdge("Braced Hang Drop", currentEdge.transform, 0.31f, 0.64f));
+                }
+                if (closeEdge.edgeDirection.y == 1)
+                {
+                    StartCoroutine(ClimbToEdge("Braced Hang Hop Right", currentEdge.transform, 0.18f, 0.44f));
+                }
+                if (closeEdge.edgeDirection.y == -1)
+                {
+                    StartCoroutine(ClimbToEdge("Braced Hang Hop Left", currentEdge.transform, 0.18f, 0.50f));
+                }
+            }
         }
     }
 
