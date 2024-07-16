@@ -11,7 +11,7 @@ public class CharacterClimbingController : MonoBehaviour
     private float upDownValue;
     private float leftRightValue;
 
-    private void Awake()
+    void Awake()
     {
         environmentChecker = GetComponent<EnvironmentChecker>();
     }
@@ -26,7 +26,7 @@ public class CharacterClimbingController : MonoBehaviour
                 {
                     Debug.Log("Climb Point Found");
                     playerController.SetControl(false);
-                    StartCoroutine(ClimbToEdge("Idle To Braced Hang", climbableInfo.transform, 0.47f, 0.54f));
+                    StartCoroutine(ClimbToEdge("Idle To Braced Hang", climbableInfo.transform, 0.39f, 0.45f));
                 }
             }
         }
@@ -54,9 +54,9 @@ public class CharacterClimbingController : MonoBehaviour
 
     Vector3 SetHandPosition(Transform edge)
     {
-        inOutValue = 0f;
-        upDownValue = 0f;
-        leftRightValue = 0f;
+        inOutValue = 0.22f;
+        upDownValue = -0.4f;
+        leftRightValue = -0.1f;
         return edge.position + edge.forward * inOutValue + Vector3.up * upDownValue - edge.right * leftRightValue;
     }
 }
