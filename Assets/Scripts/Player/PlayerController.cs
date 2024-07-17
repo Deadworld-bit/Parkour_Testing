@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        PlayerMovement();
+        //PlayerMovement();
         if (!playerControl) return;
         if (playerHanging) return;
 

@@ -19,15 +19,32 @@ public class ClimbEdge : MonoBehaviour
 
     public void CreateEdgeConnection(ClimbEdge climbEdge, Vector2 edgeDirection, ConnectionType connectionType, bool isEdgeTwoWay)
     {
-        var closeEdge = new CloseEdge()
+        bool edgeExists = closeEdges.Any(e =>
+        e.climbEdge == climbEdge &&
+        e.edgeDirection == edgeDirection &&
+        e.connectionType == connectionType &&
+        e.isEdgeTwoWay == isEdgeTwoWay);
+        if (!edgeExists)
         {
-            climbEdge = climbEdge,
-            edgeDirection = edgeDirection,
-            connectionType = connectionType,
-            isEdgeTwoWay = isEdgeTwoWay
-        };
+            var closeEdge = new CloseEdge()
+            {
+                climbEdge = climbEdge,
+                edgeDirection = edgeDirection,
+                connectionType = connectionType,
+                isEdgeTwoWay = isEdgeTwoWay
+            };
 
-        closeEdges.Add(closeEdge);
+            closeEdges.Add(closeEdge);
+        }
+        // var closeEdge = new CloseEdge()
+        //     {
+        //         climbEdge = climbEdge,
+        //         edgeDirection = edgeDirection,
+        //         connectionType = connectionType,
+        //         isEdgeTwoWay = isEdgeTwoWay
+        //     };
+
+        //     closeEdges.Add(closeEdge);
     }
 
     public CloseEdge GetCloseEdge(Vector2 edgeDirection)

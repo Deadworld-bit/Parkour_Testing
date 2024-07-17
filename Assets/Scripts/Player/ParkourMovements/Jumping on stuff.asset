@@ -15,11 +15,10 @@ MonoBehaviour:
   animationName: Jumping on stuff
   minimumHeight: 0.1
   maximumHeight: 0.5
-  vaultObstacleTag: 
   lookAtObstacle: 1
   parkourMovementDelay: 0
   allowTargetMatching: 1
   compareBodyPart: 3
   compareStartTime: 0.4
   compareEndTime: 0.71
-  comparePositionWeight: {x: 0, y: 1.5, z: 0}
+  comparePositionWeight: {x: 0, y: 1, z: 1}
