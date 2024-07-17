@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private bool onGround;
 
     public bool playerOnLedge { get; set; }
-    public bool playerHanging { get; set; }
+    public bool playerHanging { get; set; } = false;
     public LedgeInfo LedgeInfo { get; set; }
     [SerializeField] private float gravity;
     [SerializeField] private Vector3 moveDir;
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //PlayerMovement();
+        PlayerMovement();
         if (!playerControl) return;
         if (playerHanging) return;
 

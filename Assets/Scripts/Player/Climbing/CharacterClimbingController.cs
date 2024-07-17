@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterClimbingController : MonoBehaviour
 {
-    [SerializeField] private EnvironmentChecker environmentChecker;
+    private EnvironmentChecker environmentChecker;
     [SerializeField] private PlayerController playerController;
     ClimbEdge currentEdge;
 
@@ -52,15 +52,15 @@ public class CharacterClimbingController : MonoBehaviour
                 {
                     StartCoroutine(ClimbToEdge("Braced Hang Hop Up", currentEdge.transform, 0.35f, 0.70f));
                 }
-                if (closeEdge.edgeDirection.y == -1)
+                else if (closeEdge.edgeDirection.y == -1)
                 {
                     StartCoroutine(ClimbToEdge("Braced Hang Drop", currentEdge.transform, 0.31f, 0.64f));
                 }
-                if (closeEdge.edgeDirection.y == 1)
+                else if (closeEdge.edgeDirection.x == 1)
                 {
                     StartCoroutine(ClimbToEdge("Braced Hang Hop Right", currentEdge.transform, 0.18f, 0.44f));
                 }
-                if (closeEdge.edgeDirection.y == -1)
+                else if (closeEdge.edgeDirection.x == -1)
                 {
                     StartCoroutine(ClimbToEdge("Braced Hang Hop Left", currentEdge.transform, 0.18f, 0.50f));
                 }

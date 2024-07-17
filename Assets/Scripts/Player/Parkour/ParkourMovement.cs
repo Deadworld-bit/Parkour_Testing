@@ -13,7 +13,7 @@ public class ParkourMovement : ScriptableObject
     [Header("Obstacle Height")]
     [SerializeField] private float minimumHeight;
     [SerializeField] private float maximumHeight;
-    [SerializeField] private string vaultObstacleTag;
+    private string vaultObstacleTag;
 
     [Header("Player's Rotation")]
     [SerializeField] private bool lookAtObstacle;
