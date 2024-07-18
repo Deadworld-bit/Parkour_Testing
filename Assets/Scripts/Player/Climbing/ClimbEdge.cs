@@ -56,7 +56,7 @@ public class ClimbEdge : MonoBehaviour
             closeEdge = closeEdges.FirstOrDefault(n => n.edgeDirection.y == edgeDirection.y);
         }
 
-        if (edgeDirection.x != 0)
+        if (closeEdge == null && edgeDirection.x != 0)
         {
             closeEdge = closeEdges.FirstOrDefault(n => n.edgeDirection.x == edgeDirection.x);
         }

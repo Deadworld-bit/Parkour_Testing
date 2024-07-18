@@ -25,6 +25,7 @@ public class CharacterClimbingController : MonoBehaviour
             {
                 if (environmentChecker.CheckClimbableEdge(transform.forward, out RaycastHit climbableInfo))
                 {
+                    Debug.Log($"Climbable edge detected at: {climbableInfo.transform.position}");
                     currentEdge = climbableInfo.transform.GetComponent<ClimbEdge>();
                     Debug.Log("Climb Point Found");
                     playerController.SetControl(false);
@@ -35,8 +36,10 @@ public class CharacterClimbingController : MonoBehaviour
         else
         {
             //edge to edge
-            float horizontal = Mathf.Round(Input.GetAxis("Horizontal"));
-            float vertical = Mathf.Round(Input.GetAxis("Vertical"));
+            float horizontal = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+            float vertical = Mathf.Round(Input.GetAxisRaw("Vertical")); 
+
+            Debug.Log($"Input Direction: {horizontal}, {vertical}");
 
             var inputDirection = new Vector2(horizontal, vertical);
 
@@ -45,6 +48,7 @@ public class CharacterClimbingController : MonoBehaviour
             var closeEdge = currentEdge.GetCloseEdge(inputDirection);
 
             if (closeEdge != null) return;
+            Debug.Log($"Close edge found in direction: {inputDirection}");
             if (closeEdge.connectionType == ConnectionType.Jump && Input.GetButtonDown("Jump"))
             {
                 currentEdge = closeEdge.climbEdge;
@@ -70,6 +74,7 @@ public class CharacterClimbingController : MonoBehaviour
 
     private IEnumerator ClimbToEdge(string animationName, Transform edgePoint, float compareStartTime, float compareEndTime)
     {
+        Debug.Log($"Starting ClimbToEdge coroutine with animation: {animationName}");
         var compareParams = new CompareTargetParameter()
         {
             position = SetHandPosition(edgePoint),
@@ -82,6 +87,7 @@ public class CharacterClimbingController : MonoBehaviour
         var requiredRotation = Quaternion.LookRotation(-edgePoint.forward);
         yield return playerController.PerformMovement(animationName, compareParams, requiredRotation, true);
         playerController.playerHanging = true;
+        Debug.Log("Player is now hanging");
     }
 
     Vector3 SetHandPosition(Transform edge)

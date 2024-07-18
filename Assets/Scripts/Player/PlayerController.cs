@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //PlayerMovement();
+        PlayerMovement();
         if (!playerControl) return;
         if (playerHanging) return;
 
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         }
 
         velocity.y = gravity;
-        PlayerMovement();
+        //PlayerMovement();
 
         GroundCheck();
         animator.SetBool("onGround", onGround);
