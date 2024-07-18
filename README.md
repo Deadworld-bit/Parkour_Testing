@@ -6,6 +6,9 @@
 * The game automatically rotates characters toward obstacles and executes appropriate actions like vaulting and climbing. It also detects ledges, enabling ledge jumps, ledge movements, and more intricate parkour maneuvers.
 * Assets and models from the Unity Asset Store are used to enrich the visual experience.
 
+## Future Update:
+* Add more climb up action and slide action.
+* Add shimmy action on edge.
 ### Screenshots:
 
 ![Project First ScreenShot](https://github.com/Deadworld-bit/Parkour_Testing/blob/main/Pics/Screenshot%202024-07-12%20161435.png)<br><br>
