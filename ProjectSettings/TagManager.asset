@@ -6,6 +6,12 @@ TagManager:
   tags:
   - VaultObstacle
   - VaultObstacle2
+  - Vault
+  - JumpOver
+  - Ledge
+  - Slide
+  - Reach
+  - Pole
   layers:
   - Default
   - TransparentFX
@@ -17,8 +23,8 @@ TagManager:
   - Ground
   - Obstacle
   - ClimbPoint
-  - 
-  - 
+  - Ledge
+  - Wall
   - 
   - 
   - 
